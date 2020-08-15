@@ -1,4 +1,5 @@
 import os.path as check
+import datetime
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
@@ -31,14 +32,6 @@ def main():
         open_existing(containers)
 
 
-        # if check.exists(name_of_file):
-        # print('Opening ' + name_of_file + ' ...')
-
-
-
-        # Writing to A CSV File
-        # filename = 'SlickDealsSSD.csv'
-
 def new_file(containers):
 
     filename = None
@@ -48,13 +41,13 @@ def new_file(containers):
 
     filename = filename.strip().replace(' ', '_') + '.csv'
     f = open(filename, 'w')
-    headers = 'Seller, Product_Info\n'
+    headers = 'Seller, Product_Info, Date, Time\n'
     f.write(headers)
 
     file_loop_function(f, containers)
 
-    print("Done :) " + filename + " was created!")
     f.close()
+    print("Done ----> \'" + filename + "\' was created!")
 
 def open_existing(containers):
     file_exists = False
@@ -71,6 +64,9 @@ def open_existing(containers):
 
 
     f = open(filename, 'a')
+    file_loop_function(f, containers)
+    f.close()
+    print('Done ----> \'' + filename + '\' was appended to!')
 
 def file_loop_function(f, containers):
 
@@ -108,7 +104,13 @@ def file_loop_function(f, containers):
         # print(item_description)
         # print(item_info)
 
-        f.write(seller.replace(',', '|') + ',' + item_description.replace(',', '|') + '\n')
+        #Get current time and date
+        curr_date = datetime.datetime.now()
+        #date = curr_date.strftime('%a-%b-%d-%Y')
+        #time = curr_date.strftime('%I:%M:%S %p')
+
+        f.write(seller.replace(',', '|') + ',' + item_description.replace(',', '|') + ',' +
+                curr_date.strftime('%a-%b-%d-%Y') + ',' + curr_date.strftime('%I:%M:%S %p') + '\n')
 
 
 main()

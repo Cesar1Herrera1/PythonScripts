@@ -73,9 +73,6 @@ def file_loop_function(f, containers):
     # grab item description along with price
     for container in containers:
 
-        # this code is also working now ... not fully content with it yet but it'll work
-        # seller = container.a.text.strip()
-
         # Better code for above BUT gives error... Handles error now :)
         if container.find('a', {'class': 'itemStore bp-p-storeLink bp-c-link'}) is None:
             seller = 'N/A'
@@ -96,18 +93,8 @@ def file_loop_function(f, containers):
         else:
             item_description = container.div.img['title'].strip()
 
-        # code test for item info
-        # NO ERRORS FROM BOTH THIS AND ABOVE CODE
-        # item_info = container.find('a', {'class':'itemTitle bp-c-link'}).text.strip()
-
-        # print(seller)
-        # print(item_description)
-        # print(item_info)
-
         #Get current time and date
         curr_date = datetime.datetime.now()
-        #date = curr_date.strftime('%a-%b-%d-%Y')
-        #time = curr_date.strftime('%I:%M:%S %p')
 
         f.write(seller.replace(',', '|') + ',' + item_description.replace(',', '|') + ',' +
                 curr_date.strftime('%a-%b-%d-%Y') + ',' + curr_date.strftime('%I:%M:%S %p') + '\n')

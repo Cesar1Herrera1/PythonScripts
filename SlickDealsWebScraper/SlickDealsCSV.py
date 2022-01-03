@@ -73,7 +73,7 @@ def file_loop_function(f, containers):
     # grab item description along with price
     for container in containers:
 
-        # Better code for above BUT gives error... Handles error now :)
+        # Condtional statements to handle items missing information
         if container.find('a', {'class': 'itemStore bp-p-storeLink bp-c-link'}) is None:
             seller = 'N/A'
         else:
@@ -87,7 +87,7 @@ def file_loop_function(f, containers):
                 seller = container.find('button', {
                     'class': 'itemStore bp-p-storeLink bp-c-linkableButton bp-c-button--link bp-c-button'}).text.strip()
 
-        # this code gives no errors so we good :)
+        # Handles error where certain items are Null  
         if container.div.img is None:
             item_description = 'N/A'
         else:
